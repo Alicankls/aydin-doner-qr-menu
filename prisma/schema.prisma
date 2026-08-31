@@ -1,0 +1,76 @@
+// Aydın Döner - QR Menü & Admin Panel
+// Prisma şeması - SQLite (geliştirme ortamı)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String    @unique
+  order     Int       @default(0)
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+
+  @@index([order])
+}
+
+model Product {
+  id               String   @id @default(cuid())
+  name             String
+  slug             String   @unique
+  code             String?
+  price            Float
+  shortDescription String?
+  longDescription  String?
+  calories         Int?
+  allergenInfo     String?
+  imageUrl         String?
+  isActive         Boolean  @default(true)
+  isSoldOut        Boolean  @default(false)
+  showInDailyMenu  Boolean  @default(false)
+  sortOrder        Int      @default(0)
+  categoryId       String
+  category         Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([sortOrder])
+  @@index([showInDailyMenu])
+}
+
+model SiteSettings {
+  id            String   @id @default(cuid())
+  businessName  String   @default("Aydın Döner")
+  tagline       String?
+  logoUrl       String?
+  phone         String?
+  whatsapp      String?
+  address       String?
+  workingHours  String?
+  instagram     String?
+  facebook      String?
+  tiktok        String?
+  themeColor    String   @default("#B82F3D")
+  aboutText     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         String   @default("ADMIN")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
