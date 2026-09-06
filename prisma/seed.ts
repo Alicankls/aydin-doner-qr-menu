@@ -11,11 +11,17 @@ function toSlug(value: string) {
 async function main() {
   console.log("Seed başlıyor...");
 
-  // Admin kullanıcı
-  const adminEmail = process.env.ADMIN_EMAIL ?? "admin@aydindoner.com";
-  const adminPassword = process.env.ADMIN_PASSWORD ?? "AydinDoner2026!";
-  const passwordHash = await bcrypt.hash(adminPassword, 10);
+    // Admin kullanıcı
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminPassword = process.env.ADMIN_PASSWORD;
 
+  if (!adminEmail || !adminPassword) {
+    throw new Error(
+      "ADMIN_EMAIL ve ADMIN_PASSWORD environment variable'ları tanımlı değil. Seed işlemi güvenlik nedeniyle durduruldu."
+    );
+  }
+
+  const passwordHash = await bcrypt.hash(adminPassword, 10);
   await prisma.adminUser.upsert({
     where: { email: adminEmail },
     update: {},
