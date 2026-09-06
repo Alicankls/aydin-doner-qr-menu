@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Soup } from "lucide-react";
-import { formatPrice } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 
 export type ProductCardProduct = {
   id: string;
@@ -11,6 +11,7 @@ export type ProductCardProduct = {
   shortDescription: string | null;
   imageUrl: string | null;
   isSoldOut: boolean;
+  calories?: number | null;
 };
 
 export function ProductCard({ product }: { product: ProductCardProduct }) {
@@ -18,10 +19,11 @@ export function ProductCard({ product }: { product: ProductCardProduct }) {
 
   return (
     <Link
-      href={`/urun/${product.slug}`}
-      className={`group flex flex-col overflow-hidden rounded-2xl border border-border-soft bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
-        soldOut ? "opacity-70" : ""
-      }`}
+      href={`/menu/urun/${product.slug}`}
+      className={cn(
+        "group flex flex-col overflow-hidden rounded-2xl border border-border-soft bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:border-aydin-red/25 hover:shadow-lg hover:shadow-charcoal/5",
+        soldOut && "opacity-75"
+      )}
     >
       {/* Görsel */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-warm-cream">
@@ -31,36 +33,45 @@ export function ProductCard({ product }: { product: ProductCardProduct }) {
             alt={product.name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            className={`object-cover transition group-hover:scale-[1.03] ${
-              soldOut ? "opacity-60" : ""
-            }`}
+            className={cn(
+              "object-cover transition duration-500 group-hover:scale-105",
+              soldOut && "opacity-60 grayscale-[0.4]"
+            )}
           />
         ) : (
-          <span className="flex h-full w-full items-center justify-center text-border-soft">
+          <span className="flex h-full w-full items-center justify-center text-aydin-red/20">
             <Soup className="h-10 w-10" />
           </span>
         )}
 
         {soldOut && (
-          <span className="absolute left-3 top-3 rounded-full bg-sold-out px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
+          <span className="absolute left-3 top-3 rounded-full bg-sold-out px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white shadow-sm">
             Tükendi
           </span>
         )}
       </div>
 
       {/* Bilgi */}
-      <div className="flex flex-1 flex-col gap-1 p-4">
+      <div className="flex flex-1 flex-col gap-1.5 p-4">
         <h4 className="font-display text-base font-bold leading-snug text-charcoal">
           {product.name}
         </h4>
         {product.shortDescription && (
-          <p className="line-clamp-2 text-sm text-secondary-text">
+          <p className="line-clamp-2 text-sm leading-relaxed text-secondary-text">
             {product.shortDescription}
           </p>
         )}
-        <span className="mt-auto pt-2 text-lg font-extrabold text-charcoal">
-          {formatPrice(product.price)}
-        </span>
+        {product.calories != null && (
+          <p className="text-xs font-medium text-secondary-text">
+            {product.calories} kcal
+          </p>
+        )}
+        <div className="mt-auto flex items-center justify-between gap-3 pt-3">
+          <span className="h-px flex-1 bg-border-soft/70" aria-hidden="true" />
+          <span className="text-lg font-extrabold text-aydin-red-dark">
+            {formatPrice(product.price)}
+          </span>
+        </div>
       </div>
     </Link>
   );

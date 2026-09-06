@@ -34,13 +34,14 @@ async function main() {
       data: {
         businessName: "Aydın Döner",
         tagline: "Yıllardır bildiğiniz lezzet, artık telefonunuzda.",
-        phone: "0282 651 00 00",
-        whatsapp: "05001234567",
-        address: "Sanayi Mahallesi, Çorlu / Tekirdağ",
-        workingHours: "Her gün 09:00 - 22:00",
-        instagram: "https://instagram.com/aydindoner",
-        facebook: "https://facebook.com/aydindoner",
-        tiktok: "https://tiktok.com/@aydindoner",
+        logoUrl: "/uploads/logo/aydin-doner-logo.png",
+        phone: "0282 673 20 29",
+        whatsapp: "0535 498 95 76",
+        address: "Zafer, 1. Sk. Çarşı A Blok No:4, 59850 Çorlu/Tekirdağ",
+        workingHours: "Pazartesi - Cumartesi: 08:00 - 17:00",
+        instagram: null,
+        facebook: null,
+        tiktok: null,
         themeColor: "#B82F3D",
         aboutText:
           "Aydın Döner, 10 yılı aşkın süredir Çorlu'da hizmet veren köklü bir aile işletmesidir. Günlük taze pişen yemeklerimiz ve el yapımı dönerimizle sanayi esnafının ve öğle yemeği arayan herkesin durağı olmaktan gurur duyuyoruz.",
@@ -51,11 +52,11 @@ async function main() {
 
   // Kategoriler
   const categoriesData = [
-    { name: "Günün Çorbaları", order: 0 },
+    { name: "Çorbalar", order: 0 },
     { name: "Ana Yemekler", order: 1 },
-    { name: "Döner & Izgara", order: 2 },
+    { name: "Döner", order: 2 },
     { name: "Pilav & Garnitür", order: 3 },
-    { name: "Salata & Mezeler", order: 4 },
+    { name: "Soğuk Çeşitler", order: 4 },
     { name: "İçecekler", order: 5 },
     { name: "Tatlılar", order: 6 },
   ];
@@ -76,7 +77,7 @@ async function main() {
   const productsData = [
     {
       name: "Mercimek Çorbası",
-      category: "Günün Çorbaları",
+      category: "Çorbalar",
       price: 60,
       code: "COR-001",
       shortDescription: "Günlük taze pişen ev usulü mercimek çorbası.",
@@ -89,7 +90,7 @@ async function main() {
     },
     {
       name: "Ezogelin Çorbası",
-      category: "Günün Çorbaları",
+      category: "Çorbalar",
       price: 60,
       code: "COR-002",
       shortDescription: "Bulgur ve mercimek ile hazırlanan doyurucu çorba.",
@@ -141,7 +142,7 @@ async function main() {
     },
     {
       name: "Tavuk Döner Porsiyon",
-      category: "Döner & Izgara",
+      category: "Döner",
       price: 170,
       code: "DON-001",
       shortDescription: "Özel baharatlarla marine edilmiş tavuk döner.",
@@ -154,7 +155,7 @@ async function main() {
     },
     {
       name: "Et Döner Porsiyon",
-      category: "Döner & Izgara",
+      category: "Döner",
       price: 210,
       code: "DON-002",
       shortDescription: "El yapımı geleneksel et döner.",
@@ -168,7 +169,7 @@ async function main() {
     },
     {
       name: "Adana Kebap",
-      category: "Döner & Izgara",
+      category: "Döner",
       price: 230,
       code: "DON-003",
       shortDescription: "Acılı, elde çekilmiş kuzu eti kebabı.",
@@ -205,7 +206,7 @@ async function main() {
     },
     {
       name: "Cacık",
-      category: "Salata & Mezeler",
+      category: "Soğuk Çeşitler",
       price: 40,
       code: "SAL-001",
       shortDescription: "Ev yapımı yoğurt ve taze nane ile.",
@@ -217,7 +218,7 @@ async function main() {
     },
     {
       name: "Çoban Salata",
-      category: "Salata & Mezeler",
+      category: "Soğuk Çeşitler",
       price: 55,
       code: "SAL-002",
       shortDescription: "Mevsim sebzelerinden taze salata.",

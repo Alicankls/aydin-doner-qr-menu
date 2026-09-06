@@ -58,8 +58,8 @@ export async function updateSiteSettingsAction(
 
     revalidatePath("/admin/settings");
     revalidatePath("/");
-    revalidatePath("/hakkimizda");
     revalidatePath("/iletisim");
+    revalidatePath("/menu");
     return { status: "ok" };
   } catch (e) {
     const message = e instanceof Error ? e.message : "Bir hata oluştu.";
@@ -88,5 +88,6 @@ export async function uploadLogoAction(
 
   revalidatePath("/admin/settings");
   revalidatePath("/");
+  revalidatePath("/menu");
   return { success: true, url };
 }

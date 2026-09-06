@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useId } from "react";
 import { cn } from "@/lib/utils";
 
 export const Switch = forwardRef<
@@ -8,7 +8,8 @@ export const Switch = forwardRef<
     onChange: (checked: boolean) => void;
   }
 >(({ className, checked, onChange, ...props }, ref) => {
-  const id = `switch-${Math.random().toString(36).slice(2)}`;
+  const generatedId = useId();
+  const id = `switch-${generatedId}`;
   return (
     <label
       htmlFor={id}

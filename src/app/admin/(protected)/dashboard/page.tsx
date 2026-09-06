@@ -44,7 +44,7 @@ const StatCard = ({
   href?: string;
 }) => {
   const inner = (
-    <div className="flex items-center gap-4 rounded-xl border border-border-soft bg-warm-white px-5 py-4 shadow-sm">
+    <div className="flex items-center gap-4 rounded-xl border border-border-soft bg-warm-cream px-5 py-4 shadow-sm">
       <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-aydin-red/10 text-aydin-red">
         {icon}
       </div>
@@ -123,7 +123,7 @@ export default async function DashboardPage() {
             <Link
               key={a.href}
               href={a.href}
-              className="flex items-center gap-3 rounded-lg border border-border-soft p-3 text-sm font-medium text-charcoal hover:bg-warm-cream hover:text-aydin-red-dark"
+              className="flex items-center gap-3 rounded-lg border border-charcoal bg-charcoal p-3 text-sm font-medium text-warm-cream transition-colors hover:border-aydin-red hover:bg-aydin-red"
             >
               <a.icon className="h-5 w-5" />
               {a.label}

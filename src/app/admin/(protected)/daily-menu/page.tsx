@@ -1,5 +1,8 @@
 import { getDailyMenuProducts, getAllProducts } from "@/lib/data/products";
+import { withDailyMenuAutoSoldOut } from "@/lib/daily-menu-status";
 import { DailyMenuClient } from "@/components/admin/daily-menu-client";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Günün Menüsü | Aydın Döner Menü Yönetim",
@@ -14,7 +17,7 @@ export default async function DailyMenuPage() {
   return (
     <DailyMenuClient
       initialDailyIds={dailyProducts.map((p) => p.id)}
-      products={allProducts}
+      products={withDailyMenuAutoSoldOut(allProducts)}
     />
   );
 }

@@ -40,10 +40,11 @@ export default async function CategoryPage({
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
       <BreadcrumbJsonLd
         items={[
-          { name: "Ana Sayfa", path: getSiteUrl("/") },
-          { name: category.name, path: getSiteUrl(`/kategori/${category.slug}`) },
+          { name: "Menü", path: getSiteUrl("/menu") },
+          { name: category.name, path: getSiteUrl(`/menu/kategori/${category.slug}`) },
         ]}
       />
+
       <p className="text-xs font-bold uppercase tracking-widest text-aydin-red">Kategori</p>
       <h1 className="mt-1 font-display text-3xl font-extrabold text-charcoal sm:text-4xl">
         {category.name}

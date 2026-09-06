@@ -6,7 +6,7 @@ import { ExternalLink } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { ToastProvider, useToast } from "@/components/ui/toast";
-import { toggleDailyMenuAction } from "@/actions/dailyMenu";
+import { toggleDailyMenuAction, setDailyMenuSoldOutAction } from "@/actions/dailyMenu";
 
 type Row = {
   id: string;
@@ -41,6 +41,9 @@ function Inner({
 }) {
   const { addToast } = useToast();
   const [dailyIds, setDailyIds] = useState<Set<string>>(new Set(initialDailyIds));
+  const [soldOutIds, setSoldOutIds] = useState<Set<string>>(
+    () => new Set(products.filter((p) => p.isSoldOut).map((p) => p.id))
+  );
   const [, startTransition] = useTransition();
 
   // Sadece aktif ürünler günün menüsüne alınabilir
@@ -72,6 +75,25 @@ function Inner({
         willShow
           ? `${product.name} günün menüsüne eklendi.`
           : `${product.name} günün menüsünden çıkarıldı.`,
+        "success"
+      );
+    });
+  };
+
+  const toggleSoldOut = (product: Row) => {
+    const willBeSoldOut = !soldOutIds.has(product.id);
+    startTransition(async () => {
+      await setDailyMenuSoldOutAction(product.id, willBeSoldOut);
+      setSoldOutIds((prev) => {
+        const next = new Set(prev);
+        if (willBeSoldOut) next.add(product.id);
+        else next.delete(product.id);
+        return next;
+      });
+      addToast(
+        willBeSoldOut
+          ? `${product.name} tükendi olarak işaretlendi.`
+          : `${product.name} satışa açıldı.`,
         "success"
       );
     });
@@ -113,16 +135,26 @@ function Inner({
               <ul className="divide-y divide-border-soft">
                 {items.map((p) => {
                   const inMenu = dailyIds.has(p.id);
+                  const soldOut = soldOutIds.has(p.id);
                   return (
                     <li key={p.id} className="flex items-center justify-between px-6 py-3">
                       <div className="flex items-center gap-3">
                         <span className="font-medium text-charcoal">{p.name}</span>
-                        {p.isSoldOut && <Badge variant="soldout">Tükendi</Badge>}
+                        {soldOut && <Badge variant="soldout">Tükendi</Badge>}
                         <span className="text-sm font-semibold text-charcoal">
                           {new Intl.NumberFormat("tr-TR", { style: "currency", currency: "TRY" }).format(p.price)}
                         </span>
                       </div>
-                      <Switch checked={inMenu} onChange={() => toggle(p)} />
+                      <div className="flex items-center gap-5">
+                        <span className="flex items-center gap-2 text-xs font-medium text-secondary-text">
+                          Tükendi
+                          <Switch checked={soldOut} onChange={() => toggleSoldOut(p)} />
+                        </span>
+                        <span className="flex items-center gap-2 text-xs font-medium text-secondary-text">
+                          Menüde
+                          <Switch checked={inMenu} onChange={() => toggle(p)} />
+                        </span>
+                      </div>
                     </li>
                   );
                 })}

@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useActionState, useEffect } from "react";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { loginAction } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
@@ -27,20 +28,27 @@ function LoginForm() {
   }, [state?.success, router, callbackUrl]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-warm-white to-warm-cream p-4 font-sans">
-      <div className="w-full max-w-md space-y-6 rounded-xl bg-warm-white p-8 shadow-md">
+    <div className="flex min-h-screen items-center justify-center bg-charcoal p-4 font-sans">
+      <div className="w-full max-w-md space-y-6 rounded-xl bg-aydin-red p-8 shadow-md">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-aydin-red-dark font-display">
-            Aydın Döner
-          </h1>
-          <p className="mt-1 text-sm text-secondary-text">
+          <div className="relative mx-auto h-20 w-20 overflow-hidden rounded-md border border-black">
+            <Image
+              src="/uploads/logo/aydin-doner-logo.png"
+              alt="Aydın Döner"
+              fill
+              sizes="80px"
+              className="object-contain"
+              priority
+            />
+          </div>
+          <p className="mt-3 text-sm text-white/85">
             Menü yönetim panelinize hoş geldiniz.
           </p>
         </div>
 
         <form action={formAction} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-charcoal">
+            <label className="block text-sm font-medium text-white">
               E-posta
             </label>
             <Input
@@ -52,7 +60,7 @@ function LoginForm() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-charcoal">
+            <label className="block text-sm font-medium text-white">
               Şifre
             </label>
             <Input
@@ -73,8 +81,8 @@ function LoginForm() {
           <Button
             type="submit"
             disabled={isPending}
-            className="w-full"
-            variant="primary"
+            className="w-full bg-charcoal text-warm-cream hover:bg-warm-cream hover:text-charcoal"
+            variant="secondary"
           >
             {isPending ? "Giriş yapılıyor..." : "Giriş Yap"}
           </Button>

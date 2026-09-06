@@ -37,6 +37,7 @@ model Product {
   isActive         Boolean  @default(true)
   isSoldOut        Boolean  @default(false)
   showInDailyMenu  Boolean  @default(false)
+  dailyMenuOverrideDate String? // "YYYY-MM-DD" (Europe/Istanbul) — admin bu ürünü bugün için 16:30 otomatik Tükendi kuralına rağmen satışta tuttuysa dolu
   sortOrder        Int      @default(0)
   categoryId       String
   category         Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)

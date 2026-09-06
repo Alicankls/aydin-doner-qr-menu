@@ -34,7 +34,7 @@ export default async function ProductDetailPage({
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 md:py-12">
       <Link
-        href="/"
+        href="/menu"
         className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-secondary-text transition hover:text-aydin-red"
       >
         <ArrowLeft className="h-4 w-4" />
@@ -71,7 +71,7 @@ export default async function ProductDetailPage({
         <div className="order-first flex flex-col gap-5 md:order-none">
           <div>
             <Link
-              href={`/kategori/${product.category.slug}`}
+              href={`/menu/kategori/${product.category.slug}`}
               className="text-xs font-bold uppercase tracking-widest text-aydin-red transition hover:text-aydin-red-dark"
             >
               {product.category.name}
@@ -152,7 +152,7 @@ export default async function ProductDetailPage({
           <div className="mb-5 flex items-center justify-between">
             <h2 className="font-display text-2xl font-bold text-charcoal">Benzer Ürünler</h2>
             <Link
-              href={`/kategori/${product.category.slug}`}
+              href={`/menu/kategori/${product.category.slug}`}
               className="flex items-center gap-1 text-sm font-medium text-aydin-red hover:text-aydin-red-dark"
             >
               Tümünü Gör

@@ -42,9 +42,4 @@ export function buildTelLink(phone: string | null | undefined) {
   return `tel:${phone.replace(/\s+/g, "")}`;
 }
 
-export function buildMapsLink(address: string | null | undefined) {
-  if (!address) return null;
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    address
-  )}`;
-}
+export const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/qiGfNYQQx7vdxAgZ8";

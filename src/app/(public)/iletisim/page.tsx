@@ -1,8 +1,18 @@
 import { Phone, MapPin, Clock, MessageCircle } from "lucide-react";
 import { getSiteSettings } from "@/lib/data/settings";
-import { buildWhatsappLink, buildTelLink, buildMapsLink } from "@/lib/utils";
+import { buildWhatsappLink, buildTelLink, GOOGLE_MAPS_URL } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
+
+const WORKING_HOURS: { day: string; hours: string; closed?: boolean }[] = [
+  { day: "Pazartesi", hours: "08:00 - 17:00" },
+  { day: "Salı", hours: "08:00 - 17:00" },
+  { day: "Çarşamba", hours: "08:00 - 17:00" },
+  { day: "Perşembe", hours: "08:00 - 17:00" },
+  { day: "Cuma", hours: "08:00 - 17:00" },
+  { day: "Cumartesi", hours: "08:00 - 17:00" },
+  { day: "Pazar", hours: "Kapalı", closed: true },
+];
 
 export const metadata = {
   title: "İletişim & Adres",
@@ -56,7 +66,7 @@ export default async function ContactPage() {
 
         {settings.address && (
           <a
-            href={buildMapsLink(settings.address) ?? "#"}
+            href={GOOGLE_MAPS_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-4 rounded-2xl border border-border-soft bg-warm-white p-5 shadow-sm transition hover:border-aydin-red"
@@ -71,17 +81,33 @@ export default async function ContactPage() {
           </a>
         )}
 
-        {settings.workingHours && (
-          <div className="flex items-center gap-4 rounded-2xl border border-border-soft bg-warm-white p-5 shadow-sm">
-            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-aydin-red/10 text-aydin-red">
-              <Clock className="h-5 w-5" />
-            </span>
-            <span>
-              <strong className="block text-charcoal">Çalışma Saatleri</strong>
-              <span className="text-sm text-secondary-text">{settings.workingHours}</span>
-            </span>
-          </div>
-        )}
+        <div className="flex items-start gap-4 rounded-2xl border border-border-soft bg-warm-white p-5 shadow-sm">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-aydin-red/10 text-aydin-red">
+            <Clock className="h-5 w-5" />
+          </span>
+          <span className="min-w-0 flex-1">
+            <strong className="block text-charcoal">Çalışma Saatleri</strong>
+            <ul className="mt-2 divide-y divide-border-soft">
+              {WORKING_HOURS.map((row) => (
+                <li
+                  key={row.day}
+                  className="flex items-center justify-between gap-3 py-1.5 text-sm"
+                >
+                  <span className="text-secondary-text">{row.day}</span>
+                  <span
+                    className={
+                      row.closed
+                        ? "font-bold uppercase tracking-wide text-aydin-red-dark"
+                        : "font-medium text-charcoal"
+                    }
+                  >
+                    {row.hours}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </span>
+        </div>
       </div>
     </div>
   );
