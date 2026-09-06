@@ -5,8 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth";
 import { productSchema, type ProductInput } from "@/lib/validations";
 import { toSlug } from "@/lib/utils";
-import { join } from "path";
-import { mkdirSync, writeFileSync } from "fs";
+import { put } from "@vercel/blob";
 
 async function parseProduct(formData: FormData) {
   return productSchema.safeParse({
@@ -167,15 +166,14 @@ export async function uploadProductImageAction(
     return { success: false, message: "Dosya seçilmedi." };
   }
 
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
   const ext = (file.name.match(/\.([^.]+)$/)?.[1] ?? "jpg").toLowerCase();
-  const filename = `${crypto.randomUUID()}.${ext}`;
-  const dir = join(process.cwd(), "public", "uploads", "products");
-  mkdirSync(dir, { recursive: true });
-  writeFileSync(join(dir, filename), buffer);
-  const url = `/uploads/products/${filename}`;
+  const filename = `products/${crypto.randomUUID()}.${ext}`;
+
+  const blob = await put(filename, file, {
+    access: "public",
+    addRandomSuffix: false,
+  });
 
   revalidatePath("/admin/products");
-  return { success: true, url };
+  return { success: true, url: blob.url };
 }

@@ -4,8 +4,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth";
 import { siteSettingsSchema, type SiteSettingsInput } from "@/lib/validations";
-import { join } from "path";
-import { mkdirSync, writeFileSync } from "fs";
+import { put } from "@vercel/blob";
 
 export type SettingsFormState =
   | { status: "error"; message: string }
@@ -77,17 +76,16 @@ export async function uploadLogoAction(
     return { success: false, message: "Dosya seçilmedi." };
   }
 
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
   const ext = (file.name.match(/\.([^.]+)$/)?.[1] ?? "jpg").toLowerCase();
-  const filename = `${crypto.randomUUID()}.${ext}`;
-  const dir = join(process.cwd(), "public", "uploads", "logo");
-  mkdirSync(dir, { recursive: true });
-  writeFileSync(join(dir, filename), buffer);
-  const url = `/uploads/logo/${filename}`;
+  const filename = `logo/${crypto.randomUUID()}.${ext}`;
+
+  const blob = await put(filename, file, {
+    access: "public",
+    addRandomSuffix: false,
+  });
 
   revalidatePath("/admin/settings");
   revalidatePath("/");
   revalidatePath("/menu");
-  return { success: true, url };
+  return { success: true, url: blob.url };
 }
