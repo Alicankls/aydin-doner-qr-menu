@@ -57,7 +57,8 @@ function loadOrder(count: number) {
 export function startEngine(root: HTMLElement): () => void {
   gsap.registerPlugin(ScrollTrigger);
 
-  const mobile = window.matchMedia("(max-width: 820px)").matches;
+  // Portrait phones/tablets get the 9:16 slice frames; landscape and desktop get the full 16:9 frames.
+  const mobile = window.matchMedia("(max-width: 820px) and (orientation: portrait)").matches;
   const dir = mobile ? "mobile" : "desktop";
   const dprCap = mobile ? 1.5 : 2;
 
