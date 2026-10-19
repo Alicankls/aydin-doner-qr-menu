@@ -30,7 +30,7 @@ export function MenuHeroBanner({
         <div className="flex items-center gap-3">
           <span className="h-px w-8 bg-white/60" aria-hidden="true" />
           <span className="text-xs font-semibold tracking-wide text-warm-white/95 drop-shadow-[0_1px_5px_rgba(0,0,0,0.4)]">
-            10 yılı aşkın süredir sanayi bölgesinde
+            10 yılı aşkın süredir Yeni Sanayi Sitesi&apos;nde
           </span>
           <span className="h-px w-8 bg-white/60" aria-hidden="true" />
         </div>
