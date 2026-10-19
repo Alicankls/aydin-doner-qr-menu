@@ -81,7 +81,7 @@ export async function DailyMenuListing({
         <div className="mt-10 space-y-12">
           {Array.from(groups.values()).map((group) => (
             <div key={group.name}>
-              <h2 className="mb-5 rounded-xl bg-aydin-red-dark px-5 py-3 font-display text-lg font-bold text-warm-white sm:text-xl">
+              <h2 className="mb-5 rounded-xl bg-aydin-red px-5 py-3 font-display text-lg font-bold text-warm-white sm:text-xl">
                 {group.name}
               </h2>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

@@ -24,7 +24,7 @@ export default function Error({
       </p>
       <button
         onClick={reset}
-        className="mt-2 inline-flex h-11 items-center rounded-full bg-aydin-red px-6 font-semibold text-white transition hover:bg-aydin-red-dark"
+        className="mt-2 inline-flex h-11 items-center rounded-full bg-aydin-red px-6 font-semibold text-white transition hover:bg-aydin-red-hover"
       >
         Tekrar Dene
       </button>

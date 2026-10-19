@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { Inter, Roboto_Slab } from "next/font/google";
+import { Plus_Jakarta_Sans, Roboto_Slab } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+// Body font: Plus Jakarta Sans (clean geometric sans, full Turkish coverage via latin-ext).
+const body = Plus_Jakarta_Sans({
+  variable: "--font-body",
+  subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600", "700"],
 });
 
 const robotoSlab = Roboto_Slab({
   variable: "--font-roboto-slab",
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   weight: ["700", "800"],
 });
 
@@ -42,7 +43,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="tr"
-      className={`${inter.variable} ${robotoSlab.variable} h-full antialiased`}
+      className={`${body.variable} ${robotoSlab.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans bg-warm-white text-charcoal">
         {children}

@@ -21,12 +21,12 @@ export function ProductCard({ product }: { product: ProductCardProduct }) {
     <Link
       href={`/menu/urun/${product.slug}`}
       className={cn(
-        "group flex flex-col overflow-hidden rounded-2xl border border-border-soft bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:border-aydin-red/25 hover:shadow-lg hover:shadow-charcoal/5",
+        "group flex flex-col overflow-hidden rounded-2xl border border-border-soft bg-white shadow-card transition duration-300 hover:-translate-y-1 hover:border-aydin-red hover:shadow-lg hover:shadow-aydin-red/10",
         soldOut && "opacity-75"
       )}
     >
       {/* Görsel */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-warm-cream">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-surface-muted">
         {product.imageUrl ? (
           <Image
             src={product.imageUrl}
@@ -68,7 +68,7 @@ export function ProductCard({ product }: { product: ProductCardProduct }) {
         )}
         <div className="mt-auto flex items-center justify-between gap-3 pt-3">
           <span className="h-px flex-1 bg-border-soft/70" aria-hidden="true" />
-          <span className="text-lg font-extrabold text-aydin-red-dark">
+          <span className="text-lg font-extrabold text-aydin-red">
             {formatPrice(product.price)}
           </span>
         </div>

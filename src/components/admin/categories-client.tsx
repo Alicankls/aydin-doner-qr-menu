@@ -129,7 +129,7 @@ function Inner({ initialCategories }: CategoriesClientProps) {
 
       <div className="overflow-x-auto rounded-xl border border-border-soft bg-warm-white shadow-sm">
         <table className="min-w-full divide-y divide-border-soft">
-          <thead className="bg-warm-cream/60">
+          <thead className="bg-white">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-secondary-text">Sıra</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-secondary-text">Ad</th>
@@ -148,13 +148,13 @@ function Inner({ initialCategories }: CategoriesClientProps) {
               </tr>
             )}
             {categories.map((cat, index) => (
-              <tr key={cat.id} className="hover:bg-warm-cream/40">
+              <tr key={cat.id} className="hover:bg-surface-muted">
                 <td className="whitespace-nowrap px-6 py-3 text-sm text-charcoal">
                   <span className="inline-flex gap-1">
-                    <button onClick={() => moveUp(index)} disabled={index === 0} className="rounded p-1 hover:bg-warm-cream disabled:opacity-30" aria-label="Yukarı taşı">
+                    <button onClick={() => moveUp(index)} disabled={index === 0} className="rounded p-1 hover:bg-surface-muted disabled:opacity-30" aria-label="Yukarı taşı">
                       <ArrowUp className="h-4 w-4" />
                     </button>
-                    <button onClick={() => moveDown(index)} disabled={index === categories.length - 1} className="rounded p-1 hover:bg-warm-cream disabled:opacity-30" aria-label="Aşağı taşı">
+                    <button onClick={() => moveDown(index)} disabled={index === categories.length - 1} className="rounded p-1 hover:bg-surface-muted disabled:opacity-30" aria-label="Aşağı taşı">
                       <ArrowDown className="h-4 w-4" />
                     </button>
                   </span>
@@ -172,7 +172,7 @@ function Inner({ initialCategories }: CategoriesClientProps) {
                 </td>
                 <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
                   <div className="flex justify-end gap-2">
-                    <button onClick={() => openEdit(cat)} className="rounded-lg p-2 text-secondary-text hover:bg-warm-cream hover:text-aydin-red-dark" aria-label="Düzenle">
+                    <button onClick={() => openEdit(cat)} className="rounded-lg p-2 text-secondary-text hover:bg-surface-muted hover:text-aydin-red-hover" aria-label="Düzenle">
                       <Pencil className="h-4 w-4" />
                     </button>
                     <button onClick={() => setDeleteTarget(cat)} className="rounded-lg p-2 text-secondary-text hover:bg-red-50 hover:text-red-600" aria-label="Sil">

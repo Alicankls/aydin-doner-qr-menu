@@ -8,10 +8,10 @@ export function MenuHeroBanner({
   businessName: string;
   logoUrl: string | null;
 }) {
-  const heroImage = getStaticImage("images/hero-aydin-doner-lokanta.png");
+  const heroImage = getStaticImage("images/menu-bg.webp");
 
   return (
-    <section className="relative overflow-hidden bg-aydin-red-dark">
+    <section className="relative overflow-hidden bg-aydin-red">
       {heroImage && (
         <div className="absolute inset-0" aria-hidden="true">
           <Image
@@ -20,19 +20,19 @@ export function MenuHeroBanner({
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[55%_40%]"
+            className="object-cover object-[42%_45%]"
           />
-          <div className="absolute inset-0 bg-aydin-red-dark/30" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/75" />
         </div>
       )}
 
       <div className="relative mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 py-16 text-center sm:px-6 md:py-24">
         <div className="flex items-center gap-3">
-          <span className="h-px w-8 bg-aydin-red" aria-hidden="true" />
+          <span className="h-px w-8 bg-white/60" aria-hidden="true" />
           <span className="text-xs font-semibold tracking-wide text-warm-white/95 drop-shadow-[0_1px_5px_rgba(0,0,0,0.4)]">
-            10 yılı aşkın süredir Yeni Sanayi Sitesi&apos;nde
+            10 yılı aşkın süredir sanayi bölgesinde
           </span>
-          <span className="h-px w-8 bg-aydin-red" aria-hidden="true" />
+          <span className="h-px w-8 bg-white/60" aria-hidden="true" />
         </div>
 
         {logoUrl && (

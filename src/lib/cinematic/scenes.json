@@ -1,0 +1,6 @@
+{
+  "scenes": [
+    { "source": "sahne-6", "desktop": 144, "mobile": 96 },
+    { "source": "sahne-7", "desktop": 96, "mobile": 72 }
+  ]
+}

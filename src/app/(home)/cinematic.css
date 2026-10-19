@@ -1,0 +1,901 @@
+/* Home page only. Loaded by (home)/layout.tsx, so menu/product pages never see it. */
+
+#cine-root {
+  /* every colour comes from the tokens in globals.css */
+  --cine-bg: var(--color-black);
+  --cine-ink: var(--color-warm-white);
+  --cine-ink-soft: rgb(255 255 255 / 0.74);
+  --cine-red: var(--color-aydin-red);
+  --cine-red-hover: var(--color-aydin-red-hover);
+  --cine-fire: var(--color-aydin-red-light); /* red accent for small text on black (was orange) */
+  --cine-line: rgb(255 255 255 / 0.16);
+  --cine-display: var(--font-bebas), "Arial Narrow", Impact, sans-serif;
+  --cine-gutter: clamp(16px, 4vw, 48px);
+
+  background: var(--cine-bg);
+  color: var(--cine-ink);
+  min-height: 100svh;
+}
+body:has(#cine-root) {
+  background: var(--color-black);
+}
+
+:where(#cine-root a) {
+  color: inherit;
+}
+#cine-root :focus-visible {
+  outline: 3px solid var(--cine-fire);
+  outline-offset: 3px;
+}
+
+/* ---------- buttons ---------- */
+.cine-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 150ms ease-out,
+    color 150ms ease-out,
+    border-color 150ms ease-out,
+    transform 150ms ease-out;
+}
+.cine-btn:active {
+  transform: translateY(1px) scale(0.985);
+}
+.cine-btn-sm {
+  min-height: 44px;
+  padding: 0 16px;
+  font-size: 14px;
+}
+.cine-btn-red {
+  background: var(--cine-red);
+  color: #fff;
+}
+.cine-btn-red:hover {
+  background: var(--cine-red-hover);
+}
+.cine-btn-light {
+  background: var(--cine-ink);
+  color: var(--color-charcoal);
+}
+.cine-btn-light:hover {
+  background: #fff;
+}
+.cine-btn-ghost {
+  background: rgb(10 10 10 / 0.55);
+  border-color: rgb(255 255 255 / 0.5);
+  color: var(--cine-ink);
+  backdrop-filter: blur(8px);
+}
+.cine-btn-ghost:hover {
+  border-color: var(--cine-ink);
+  background: rgb(10 10 10 / 0.8);
+}
+
+/* ---------- top bar (always visible) ---------- */
+.cine-topbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px var(--cine-gutter);
+  background: linear-gradient(to bottom, rgb(10 10 10 / 0.85), rgb(10 10 10 / 0));
+  pointer-events: none;
+}
+.cine-topbar > * {
+  pointer-events: auto;
+}
+.cine-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  min-width: 0;
+  text-decoration: none;
+}
+.cine-wordmark {
+  font-family: var(--cine-display);
+  font-size: 26px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  line-height: 1;
+}
+.cine-quick {
+  display: flex;
+  gap: 8px;
+}
+@media (max-width: 480px) {
+  .cine-wordmark {
+    font-size: 21px;
+  }
+  .cine-hud {
+    top: 62px;
+  }
+}
+@media (max-width: 400px) {
+  .cine-topbar {
+    gap: 6px;
+    padding-inline: 12px;
+  }
+  .cine-quick {
+    gap: 6px;
+  }
+  .cine-quick .cine-btn {
+    padding: 0 12px;
+    font-size: 13px;
+  }
+  .cine-btn-icon-optional {
+    display: none;
+  }
+  /* WhatsApp collapses to its icon (it keeps an aria-label) so nothing collides at 360px */
+  .cine-quick .cine-btn-ghost {
+    width: 44px;
+    padding: 0;
+  }
+  .cine-btn-label {
+    display: none;
+  }
+  .cine-wordmark {
+    font-size: 20px;
+  }
+}
+
+/* ---------- fixed canvas layer ---------- */
+.cine-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: var(--cine-bg);
+  overflow: hidden;
+}
+.cine-layer-poster {
+  object-fit: cover;
+}
+.cine-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+#cine-root[data-drawn="1"] .cine-canvas {
+  opacity: 1;
+}
+
+/* ---------- loader ---------- */
+.cine-loader {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  z-index: 60;
+  transition: opacity 300ms ease-out;
+}
+.cine-loader-bar {
+  display: block;
+  height: 100%;
+  background: var(--cine-fire);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms ease-out;
+}
+#cine-root[data-ready="1"] .cine-loader,
+#cine-root:not([data-mode="cinematic"]) .cine-loader {
+  opacity: 0;
+}
+
+/* ---------- temperature HUD ---------- */
+.cine-hud {
+  position: fixed;
+  left: var(--cine-gutter);
+  top: 72px;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: stretch;
+  column-gap: 12px;
+  opacity: 0;
+  transition: opacity 250ms ease-out;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.cine-hud[data-on="1"] {
+  opacity: 1;
+}
+.cine-hud-label {
+  grid-column: 1;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cine-ink-soft);
+  align-self: start;
+}
+.cine-hud-value {
+  grid-column: 1;
+  font-family: var(--cine-display);
+  font-size: clamp(44px, 9vw, 72px);
+  line-height: 0.9;
+  color: var(--cine-fire);
+}
+.cine-hud-unit {
+  font-size: 0.5em;
+  margin-left: 2px;
+  color: var(--cine-ink);
+}
+.cine-hud-track {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  width: 3px;
+  height: 100%;
+  min-height: 56px;
+  background: var(--cine-line);
+  position: relative;
+  overflow: hidden;
+}
+.cine-hud-bar {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--cine-red), var(--cine-fire));
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+
+/* ---------- scenes ---------- */
+.cine-scene {
+  position: relative;
+  z-index: 10;
+  height: var(--scene-h, 250svh);
+}
+.cine-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+.cine-static-poster {
+  display: none;
+}
+.cine-copy {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  padding: 88px var(--cine-gutter) clamp(28px, 6svh, 64px);
+}
+.cine-item {
+  grid-area: 1 / 1;
+  align-self: end;
+  max-width: 44rem;
+  /* before JS: only items that start at progress 0 are shown */
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity;
+}
+/* local scrim behind the copy only (a per-stage gradient shows a seam while scenes slide past each other) */
+.cine-item::before {
+  content: "";
+  position: absolute;
+  inset: -72px -32px -48px;
+  z-index: -1;
+  background: radial-gradient(ellipse at center, rgb(10 10 10 / 0.78), rgb(10 10 10 / 0) 72%);
+  pointer-events: none;
+}
+.cine-item {
+  position: relative;
+}
+.cine-item[data-in="0"] {
+  opacity: 1;
+  visibility: visible;
+}
+.cine-item[data-pos="end"] {
+  justify-self: start;
+}
+.cine-item[data-pos="center"] {
+  justify-self: center;
+  text-align: center;
+}
+@media (min-width: 821px) {
+  .cine-item[data-pos="end"] {
+    justify-self: end;
+    text-align: right;
+  }
+  .cine-item[data-pos="end"] .cine-actions {
+    justify-content: flex-end;
+  }
+}
+
+/* ---------- type ---------- */
+/* white on red pill: readable over any frame, bright or dark */
+.cine-tag {
+  display: inline-block;
+  margin: 0 0 var(--space-3);
+  padding: 5px 10px 4px;
+  border-radius: 999px;
+  background: var(--cine-red);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: #fff;
+}
+.cine-h1,
+.cine-h2,
+.cine-h3 {
+  font-family: var(--cine-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+}
+.cine-h1 {
+  font-size: clamp(4.2rem, 17vw, 11rem); /* ~16x body on desktop */
+}
+.cine-h2 {
+  font-size: clamp(3.4rem, 13vw, 8rem);
+}
+.cine-word {
+  font-size: clamp(4.4rem, 19vw, 11rem);
+}
+.cine-h3 {
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  color: var(--cine-ink);
+}
+.cine-h1,
+.cine-h2 {
+  text-wrap: balance;
+}
+.cine-h1 + .cine-lead {
+  margin-top: var(--space-2);
+}
+.cine-item[data-pos="end"] .cine-lead {
+  margin-inline-start: auto;
+}
+.cine-lead {
+  margin: 14px 0 0;
+  max-width: 30rem;
+  font-size: clamp(1.05rem, 2.6vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--cine-ink);
+}
+.cine-meta {
+  margin: 18px 0 0;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--cine-ink-soft);
+}
+.cine-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* ---------- solid sections (menu, contact) ---------- */
+.cine-solid {
+  position: relative;
+  z-index: 10;
+  background: var(--cine-bg);
+}
+.cine-wrap {
+  position: relative;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: clamp(64px, 12vw, 128px) var(--cine-gutter);
+}
+.cine-menu {
+  overflow: hidden;
+}
+.cine-menu .cine-wrap {
+  padding-block: clamp(48px, 7vw, 80px);
+}
+.cine-menu-bg {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: min(60svh, 560px);
+  opacity: 0.28;
+  -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent);
+  mask-image: linear-gradient(to bottom, #000 30%, transparent);
+}
+.cine-tabldot {
+  margin: 4px 0 12px;
+}
+.cine-tabldot > div {
+  margin-bottom: 0;
+}
+.cine-menu-cols {
+  display: grid;
+  gap: 16px;
+  margin-top: var(--space-6);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .cine-menu-cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.cine-h2-sm {
+  font-size: clamp(1.9rem, 6.5vw, 4rem); /* half the size of the scene headlines */
+}
+.cine-group {
+  margin-top: var(--space-3);
+}
+.cine-group-name {
+  margin: 0 0 2px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--cine-ink-soft);
+}
+.cine-card-note {
+  margin: 0;
+  color: var(--cine-ink-soft);
+}
+.cine-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6) 20px 20px;
+  border: 1px solid var(--cine-line);
+  border-top: 3px solid var(--cine-red);
+  border-radius: 16px;
+  background: rgb(255 255 255 / 0.04);
+  box-shadow: 0 18px 40px -24px rgb(0 0 0 / 0.8);
+  transition:
+    border-color 150ms ease-out,
+    background-color 150ms ease-out;
+}
+.cine-card:hover {
+  border-color: rgb(255 255 255 / 0.4);
+  border-top-color: var(--cine-red);
+  background: rgb(255 255 255 / 0.07);
+}
+.cine-card-title {
+  margin: 0 0 8px;
+  font-family: var(--cine-display);
+  font-weight: 400;
+  font-size: 1.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cine-fire);
+}
+.cine-card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+.cine-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 44px;
+  padding: 10px 0;
+  border-top: 1px solid var(--cine-line);
+  text-decoration: none;
+  transition: color 150ms ease-out;
+}
+.cine-row:hover .cine-row-name {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.cine-row[data-soldout="1"] {
+  opacity: 0.6;
+}
+.cine-row-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--cine-ink);
+}
+.cine-row-price {
+  flex-shrink: 0;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.cine-soldout {
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--color-sold-out);
+  color: #fff;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.cine-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  align-self: flex-start;
+  min-height: 44px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cine-fire);
+  text-decoration: none;
+}
+.cine-more:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.cine-menu-end {
+  margin-top: var(--space-8);
+}
+
+.cine-contact {
+  border-top: 1px solid var(--cine-line);
+}
+.cine-contact-grid {
+  display: grid;
+  gap: 24px 48px;
+  margin: 36px 0 0;
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 700px) {
+  .cine-contact-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.cine-contact-grid dt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cine-fire);
+}
+.cine-contact-grid dd {
+  margin: 6px 0 0;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.cine-contact-grid dd a {
+  display: inline-block;
+  min-height: 44px;
+  line-height: 44px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.cine-footer {
+  padding: 24px var(--cine-gutter);
+  border-top: 1px solid var(--cine-line);
+  text-align: center;
+  font-size: 13px;
+  color: var(--cine-ink-soft);
+}
+
+/* ---------- static-poster mode: slow link / Save-Data / reduced motion ---------- */
+#cine-root[data-mode="static"] .cine-layer,
+#cine-root[data-mode="static"] .cine-hud,
+#cine-root[data-mode="static"] .cine-loader {
+  display: none;
+}
+#cine-root[data-mode="static"] .cine-scene {
+  height: auto;
+}
+#cine-root[data-mode="static"] .cine-stage {
+  position: relative;
+  height: auto;
+  overflow: visible;
+  background: var(--cine-bg);
+}
+#cine-root[data-mode="static"] .cine-static-poster {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 60svh;
+  object-fit: cover;
+}
+#cine-root[data-mode="static"] .cine-copy {
+  position: relative;
+  inset: auto;
+  display: block;
+  padding: 24px var(--cine-gutter) 56px;
+}
+#cine-root[data-mode="static"] .cine-item::before {
+  display: none;
+}
+#cine-root[data-mode="static"] .cine-item {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  max-width: none;
+  text-align: left;
+}
+#cine-root[data-mode="static"] .cine-item + .cine-item {
+  margin-top: 36px;
+}
+#cine-root[data-mode="static"] .cine-item .cine-actions {
+  justify-content: flex-start;
+}
+#cine-root[data-mode="static"] .cine-topbar {
+  position: sticky;
+  background: rgb(10 10 10 / 0.92);
+}
+#cine-root[data-mode="static"] .cine-h1 {
+  font-size: clamp(3.6rem, 16vw, 7rem);
+}
+#cine-root[data-mode="static"] .cine-h2,
+#cine-root[data-mode="static"] .cine-word {
+  font-size: clamp(2.8rem, 12vw, 5rem);
+}
+@media (prefers-reduced-motion: reduce) {
+  #cine-root * {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- marquee band between the two scenes (pure CSS) ---------- */
+.cine-marquee {
+  /* a normal block row (no sticky/fixed/absolute): sits between the last scene and the menu */
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  height: 52px;
+  overflow: hidden;
+  background: var(--color-aydin-red);
+  color: #fff;
+  border-block: 2px solid #fff;
+}
+.cine-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: cine-marquee 45s linear infinite;
+}
+.cine-marquee-half {
+  display: flex;
+  flex-shrink: 0;
+}
+.cine-marquee-item {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--cine-display);
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.cine-marquee-item::after {
+  content: "\2022";
+  margin-inline: 22px;
+  opacity: 0.7;
+}
+@keyframes cine-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+#cine-root[data-mode="static"] .cine-marquee-track {
+  animation: none;
+}
+
+/* ---------- reading progress (top of page) ---------- */
+.cine-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  z-index: 70;
+  pointer-events: none;
+}
+.cine-progress-bar {
+  display: block;
+  height: 100%;
+  background: var(--cine-red);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+#cine-root[data-mode="static"] .cine-progress {
+  display: none;
+}
+
+/* ---------- effect helpers (SplitText pieces, magnetic buttons) ---------- */
+.cine-split-word {
+  display: inline-block;
+  white-space: nowrap; /* a word never breaks mid-way, only between words */
+}
+.cine-split-char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+.cine-btn[data-magnetic] {
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cine-marquee-track {
+    animation: none;
+  }
+}
+
+/* ---------- Hakkımızda: white section between the marquee band and the menu ---------- */
+.cine-about {
+  position: relative;
+  z-index: 10;
+  background: #fff;
+  color: var(--color-charcoal);
+  padding: 64px var(--cine-gutter);
+}
+@media (min-width: 900px) {
+  .cine-about {
+    padding-block: 120px;
+  }
+}
+.cine-about-grid {
+  display: grid;
+  gap: var(--space-12);
+  max-width: 72rem;
+  margin: 0 auto;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .cine-about-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 96px;
+  }
+}
+.cine-about-media {
+  order: -1; /* mobile: photo first, then the text */
+}
+@media (min-width: 900px) {
+  .cine-about-media {
+    order: 0;
+  }
+}
+.cine-about-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-4);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-aydin-red);
+}
+.cine-about-eyebrow::before {
+  content: "";
+  width: 40px;
+  height: 1px;
+  background: currentColor;
+}
+.cine-about-title {
+  margin: 0;
+  font-weight: 400;
+  line-height: 0.95;
+}
+.cine-about-title-strong {
+  display: block;
+  font-family: var(--cine-display);
+  font-size: clamp(2.9rem, 8.5vw, 5.4rem);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+.cine-about-title-em {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-serif-italic), Georgia, "Times New Roman", serif;
+  font-size: clamp(2.7rem, 8vw, 5rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: 0;
+  color: var(--color-aydin-red);
+}
+.cine-about-orn {
+  display: block;
+  position: relative;
+  width: 120px;
+  height: 1px;
+  margin: var(--space-6) 0;
+  background: var(--color-aydin-red);
+}
+.cine-about-orn::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  background: var(--color-aydin-red);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.cine-about-copy {
+  margin: 0;
+  max-width: 46ch;
+  font-size: clamp(1.02rem, 2.4vw, 1.15rem);
+  line-height: 1.8;
+  color: #3d3d3d;
+}
+.cine-about-sign {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-6) 0 0;
+}
+.cine-about-sign-name {
+  margin-inline-end: var(--space-2);
+  font-family: var(--font-serif-italic), Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-size: 1.45rem;
+  color: var(--color-black);
+}
+.cine-chip {
+  display: inline-block;
+  padding: 6px 12px 5px;
+  border: 1.5px solid var(--color-aydin-red);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-aydin-red);
+}
+.cine-about-media {
+  position: relative;
+  margin: 0;
+  width: min(100%, 440px);
+  justify-self: center;
+}
+@media (min-width: 900px) {
+  .cine-about-media {
+    width: min(100%, 460px);
+    justify-self: end;
+  }
+}
+.cine-about-frame {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--color-aydin-red);
+  border-radius: 28px;
+  transform: translate(14px, 14px);
+}
+.cine-about-photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #e4e4e4;
+  box-shadow: 0 24px 50px -22px rgb(0 0 0 / 0.5);
+}
+.cine-about-img {
+  object-fit: cover;
+  object-position: 78% 50%; /* keep the skewer, crop the kitchen on the left */
+  will-change: transform;
+}
+.cine-about-placeholder {
+  position: absolute;
+  inset: 0;
+  background: #e9e9e9;
+}
+/* flat dim + extra dark in the bottom 45%. This also hides the AI "HUD" box in the lower right. */
+.cine-about-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgb(0 0 0 / 0.62) 0%, rgb(0 0 0 / 0.28) 30%, rgb(0 0 0 / 0) 45%),
+    rgb(0 0 0 / 0.38);
+  pointer-events: none;
+}

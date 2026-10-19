@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
+import { BrandLogo } from "@/components/public/brand-logo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Phone, MapPin, MessageCircle } from "lucide-react";
@@ -12,7 +12,7 @@ function navTabClass(active: boolean) {
   return cn(
     "whitespace-nowrap rounded-full px-4 py-1.5 text-xs transition",
     active
-      ? "bg-warm-white font-semibold text-aydin-red-dark hover:bg-white"
+      ? "bg-white font-semibold text-aydin-red hover:bg-surface-muted"
       : "border border-white/25 bg-white/10 font-medium text-warm-cream hover:border-white/50 hover:bg-white/20 hover:text-white"
   );
 }
@@ -25,17 +25,7 @@ export function SiteFooter() {
     <footer className="bg-charcoal">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3">
         <div>
-          {settings.logoUrl && (
-            <div className="relative h-12 w-12 overflow-hidden rounded-lg shadow-sm">
-              <Image
-                src={settings.logoUrl}
-                alt={settings.businessName}
-                fill
-                sizes="48px"
-                className="object-cover"
-              />
-            </div>
-          )}
+          {settings.logoUrl && <BrandLogo src={settings.logoUrl} size={48} />}
           {settings.tagline && (
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-warm-cream/60">
               {settings.tagline}
@@ -99,7 +89,7 @@ export function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="WhatsApp ile sipariş ver"
-      className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105"
+      className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-charcoal shadow-lg transition hover:scale-105"
     >
       <MessageCircle className="h-7 w-7" />
     </a>
@@ -126,18 +116,7 @@ export function SiteHeader({ variant }: { variant: "site" | "qr" }) {
     <header className="sticky top-0 z-40 bg-aydin-red">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link href={homeHref} className="flex min-w-0 items-center gap-2.5 sm:gap-3">
-          {settings.logoUrl && (
-            <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg shadow-sm sm:h-12 sm:w-12">
-              <Image
-                src={settings.logoUrl}
-                alt={settings.businessName}
-                fill
-                sizes="48px"
-                className="object-cover"
-                priority
-              />
-            </div>
-          )}
+          {settings.logoUrl && <BrandLogo src={settings.logoUrl} size={40} priority />}
           <span className="truncate font-display text-lg font-extrabold tracking-tight text-white sm:text-xl">
             {settings.businessName}
           </span>
@@ -169,7 +148,7 @@ export function SiteHeader({ variant }: { variant: "site" | "qr" }) {
 
       {/* Nav şeridi */}
       {variant === "site" ? (
-        <nav className="border-t border-white/15 bg-aydin-red-dark">
+        <nav className="border-t border-white/25 bg-aydin-red">
           <div className="no-scrollbar mx-auto flex max-w-6xl gap-2 overflow-x-auto px-4 py-2.5 sm:px-6">
             <Link
               href="/"
@@ -196,7 +175,7 @@ export function SiteHeader({ variant }: { variant: "site" | "qr" }) {
         </nav>
       ) : (
         categories.length > 0 && (
-          <nav className="border-t border-white/15 bg-aydin-red-dark">
+          <nav className="border-t border-white/25 bg-aydin-red">
             <div className="no-scrollbar mx-auto flex max-w-6xl gap-2 overflow-x-auto px-4 py-2.5 sm:px-6">
               <Link
                 href="/menu/gunun-menusu"

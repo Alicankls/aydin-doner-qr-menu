@@ -43,10 +43,10 @@ export function DailyMenuPreview({ products }: { products: Product[] }) {
             <div className="space-y-10">
               {Array.from(groups.values()).map((group) => (
                 <div key={group.name}>
-                  <h3 className="mb-4 rounded-xl bg-aydin-red-dark px-5 py-3 font-display text-lg font-bold text-warm-white sm:text-xl">
+                  <h3 className="mb-4 rounded-xl bg-aydin-red px-5 py-3 font-display text-lg font-bold text-warm-white sm:text-xl">
                     {group.name}
                   </h3>
-                  <div className="overflow-hidden rounded-2xl border border-aydin-red/15 bg-warm-cream/70 shadow-sm">
+                  <div className="overflow-hidden rounded-2xl border border-border-soft bg-white shadow-card">
                     <ul className="divide-y divide-border-soft/80">
                       {group.products.map((product) => (
                         <li key={product.id}>
@@ -77,7 +77,7 @@ export function DailyMenuPreview({ products }: { products: Product[] }) {
                                   Tükendi
                                 </span>
                               )}
-                              <span className="text-lg font-extrabold text-aydin-red-dark">
+                              <span className="text-lg font-extrabold text-aydin-red">
                                 {formatPrice(product.price)}
                               </span>
                             </div>

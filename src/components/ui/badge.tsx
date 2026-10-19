@@ -16,10 +16,10 @@ export const Badge = forwardRef<
 >(({ className, variant = "default", ...props }, ref) => {
   const variants: Record<BadgeVariant, string> = {
     default: "bg-secondary-text/10 text-secondary-text",
-    secondary: "bg-warm-cream text-aydin-red-dark",
+    secondary: "bg-surface-muted text-aydin-red",
     soldout: "bg-sold-out text-white",
     daily: "bg-aydin-red text-white",
-    active: "bg-aydin-red/10 text-aydin-red-dark",
+    active: "bg-aydin-red/10 text-aydin-red",
     inactive: "bg-border-soft text-secondary-text",
   };
   return (

@@ -180,7 +180,7 @@ function ProductTable({
   return (
     <div className="overflow-x-auto rounded-xl border border-border-soft bg-warm-white shadow-sm">
       <table className="min-w-full divide-y divide-border-soft">
-        <thead className="bg-warm-cream/60">
+        <thead className="bg-white">
           <tr>
             <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-secondary-text">Görsel</th>
             <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-secondary-text">Ad</th>
@@ -202,7 +202,7 @@ function ProductTable({
           {products.map((p) => {
             const badge = statusBadge(p);
             return (
-              <tr key={p.id} className={`hover:bg-warm-cream/40 ${!p.isActive ? "opacity-60" : ""}`}>
+              <tr key={p.id} className={`hover:bg-surface-muted ${!p.isActive ? "opacity-60" : ""}`}>
                 <td className="px-6 py-2">
                   {p.imageUrl ? (
                     <div className="relative h-12 w-16 overflow-hidden rounded-md">
@@ -228,20 +228,20 @@ function ProductTable({
                     <button
                       onClick={() => onToggle(p, "isSoldOut")}
                       title={p.isSoldOut ? "Tükendi işaretini kaldır" : "Tükendi olarak işaretle"}
-                      className="rounded-lg px-2 py-1 text-xs text-secondary-text hover:bg-warm-cream hover:text-sold-out"
+                      className="rounded-lg px-2 py-1 text-xs text-secondary-text hover:bg-surface-muted hover:text-sold-out"
                     >
                       {p.isSoldOut ? "Satışa Aç" : "Tükendi"}
                     </button>
                     <button
                       onClick={() => onToggle(p, "showInDailyMenu")}
                       title={p.showInDailyMenu ? "Günün menüsünden çıkar" : "Günün menüsüne ekle"}
-                      className="rounded-lg px-2 py-1 text-xs text-secondary-text hover:bg-warm-cream hover:text-aydin-red-dark"
+                      className="rounded-lg px-2 py-1 text-xs text-secondary-text hover:bg-surface-muted hover:text-aydin-red-hover"
                     >
                       {p.showInDailyMenu ? "Menüden Çıkar" : "Günün Menüsü"}
                     </button>
                     <Link
                       href={`/admin/products/${p.id}/edit`}
-                      className="rounded-lg p-2 text-secondary-text hover:bg-warm-cream hover:text-aydin-red-dark"
+                      className="rounded-lg p-2 text-secondary-text hover:bg-surface-muted hover:text-aydin-red-hover"
                       aria-label="Düzenle"
                     >
                       <Pencil className="h-4 w-4" />

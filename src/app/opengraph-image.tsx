@@ -15,7 +15,7 @@ export default function Image() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "#F7F2E8",
+          background: "#FFFFFF",
         }}
       >
         <div
@@ -26,7 +26,7 @@ export default function Image() {
             width: 160,
             height: 160,
             borderRadius: 32,
-            background: "#B82F3D",
+            background: "#E10600",
             color: "#FFFFFF",
             fontSize: 96,
             fontWeight: 800,
@@ -39,7 +39,7 @@ export default function Image() {
           style={{
             fontSize: 76,
             fontWeight: 800,
-            color: "#252525",
+            color: "#1A1A1A",
           }}
         >
           Aydın Döner
@@ -49,7 +49,7 @@ export default function Image() {
             marginTop: 16,
             fontSize: 32,
             fontWeight: 500,
-            color: "#6F6F6F",
+            color: "#5C5C5C",
           }}
         >
           Çorlu / Tekirdağ

@@ -49,3 +49,7 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# source videos (only used to extract frames)
+/kaynak-videolar/
+/kaynak-gorseller/

@@ -54,7 +54,7 @@ export default async function MenuHomePage() {
             <div className="space-y-12">
               {categoriesWithProducts.map((category) => (
                 <div key={category.id}>
-                  <div className="mb-5 flex items-center justify-between gap-4 rounded-xl bg-aydin-red-dark px-5 py-3">
+                  <div className="mb-5 flex items-center justify-between gap-4 rounded-xl bg-aydin-red px-5 py-3">
                     <h3 className="font-display text-lg font-bold text-warm-white sm:text-xl">
                       {category.name}
                     </h3>

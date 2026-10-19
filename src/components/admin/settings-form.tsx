@@ -58,7 +58,7 @@ function Inner({ settings }: { settings: Settings }) {
       instagram: settings.instagram ?? "",
       facebook: settings.facebook ?? "",
       tiktok: settings.tiktok ?? "",
-      themeColor: settings.themeColor ?? "#B82F3D",
+      themeColor: settings.themeColor ?? "#E10600",
       aboutText: settings.aboutText ?? "",
     },
   });
@@ -150,7 +150,7 @@ function Inner({ settings }: { settings: Settings }) {
             <Input {...register("logoUrl")} placeholder="/uploads/logo/logo.png" />
           </Field>
           <Field label="Tema Rengi" error={errors.themeColor?.message}>
-            <Input {...register("themeColor")} placeholder="#B82F3D" />
+            <Input {...register("themeColor")} placeholder="#E10600" />
           </Field>
         </div>
       </section>

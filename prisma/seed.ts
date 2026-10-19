@@ -48,7 +48,7 @@ async function main() {
         instagram: null,
         facebook: null,
         tiktok: null,
-        themeColor: "#B82F3D",
+        themeColor: "#E10600",
         aboutText:
           "Aydın Döner, 10 yılı aşkın süredir Çorlu'da hizmet veren köklü bir aile işletmesidir. Günlük taze pişen yemeklerimiz ve el yapımı dönerimizle sanayi esnafının ve öğle yemeği arayan herkesin durağı olmaktan gurur duyuyoruz.",
       },

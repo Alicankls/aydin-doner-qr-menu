@@ -44,7 +44,7 @@ export default async function ProductDetailPage({
       {/* ÜST BLOK */}
       <div className="grid gap-8 md:grid-cols-2 md:items-start">
         {/* Sol: büyük görsel */}
-        <div className="relative aspect-square w-full overflow-hidden rounded-3xl border border-border-soft bg-warm-cream shadow-sm">
+        <div className="relative aspect-square w-full overflow-hidden rounded-3xl border border-border-soft bg-surface-muted shadow-card">
           {product.imageUrl ? (
             <Image
               src={product.imageUrl}
@@ -72,7 +72,7 @@ export default async function ProductDetailPage({
           <div>
             <Link
               href={`/menu/kategori/${product.category.slug}`}
-              className="text-xs font-bold uppercase tracking-widest text-aydin-red transition hover:text-aydin-red-dark"
+              className="text-xs font-bold uppercase tracking-widest text-aydin-red transition hover:text-aydin-red-hover"
             >
               {product.category.name}
             </Link>
@@ -88,7 +88,7 @@ export default async function ProductDetailPage({
             <p className="text-lg leading-relaxed text-secondary-text">{product.shortDescription}</p>
           )}
 
-          <p className="font-display text-4xl font-extrabold text-aydin-red-dark">
+          <p className="font-display text-4xl font-extrabold text-aydin-red">
             {formatPrice(product.price)}
           </p>
 
@@ -97,7 +97,7 @@ export default async function ProductDetailPage({
               href={whatsappOrder}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-14 items-center justify-center gap-2.5 rounded-full bg-[#25D366] px-8 text-base font-semibold text-white shadow-md transition hover:brightness-105"
+              className="inline-flex h-14 items-center justify-center gap-2.5 rounded-full bg-whatsapp px-8 text-base font-semibold text-charcoal shadow-md transition hover:brightness-105"
             >
               <MessageCircle className="h-5 w-5" />
               WhatsApp ile Sipariş Ver
@@ -116,14 +116,14 @@ export default async function ProductDetailPage({
       {/* ALT BLOK - detaylar */}
       <div className="mt-10 grid gap-4 md:mt-14 md:grid-cols-2">
         {product.longDescription && (
-          <section className="rounded-2xl border border-border-soft bg-warm-cream/60 p-6">
+          <section className="rounded-2xl border border-border-soft bg-white p-6">
             <h2 className="font-display text-lg font-bold text-charcoal">Detaylı Açıklama</h2>
             <p className="mt-3 leading-relaxed text-secondary-text">{product.longDescription}</p>
           </section>
         )}
 
         {(product.calories != null || product.allergenInfo) && (
-          <section className="rounded-2xl border border-border-soft bg-warm-cream/60 p-6">
+          <section className="rounded-2xl border border-border-soft bg-white p-6">
             <h2 className="font-display text-lg font-bold text-charcoal">Besin &amp; Alerjen</h2>
             <div className="mt-3 space-y-3">
               {product.calories != null && (
@@ -153,7 +153,7 @@ export default async function ProductDetailPage({
             <h2 className="font-display text-2xl font-bold text-charcoal">Benzer Ürünler</h2>
             <Link
               href={`/menu/kategori/${product.category.slug}`}
-              className="flex items-center gap-1 text-sm font-medium text-aydin-red hover:text-aydin-red-dark"
+              className="flex items-center gap-1 text-sm font-medium text-aydin-red hover:text-aydin-red-hover"
             >
               Tümünü Gör
               <ChevronRight className="h-4 w-4" />

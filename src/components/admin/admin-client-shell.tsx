@@ -33,7 +33,7 @@ export function AdminClientShell({
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-warm-cream text-charcoal">
+    <div className="flex h-screen overflow-hidden bg-surface-muted text-charcoal">
       {/* Mobile backdrop */}
       {sidebarOpen && (
         <div
@@ -108,7 +108,7 @@ export function AdminClientShell({
       {/* Main */}
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         {/* Topbar */}
-        <header className="flex h-16 items-center justify-between border-b border-border-soft bg-warm-cream px-4 lg:px-6">
+        <header className="flex h-16 items-center justify-between border-b border-border-soft bg-surface-muted px-4 lg:px-6">
           <button
             className="lg:hidden rounded p-2 text-secondary-text hover:text-charcoal"
             onClick={() => setSidebarOpen(true)}
@@ -119,7 +119,7 @@ export function AdminClientShell({
         </header>
 
         {/* Content */}
-        <main className="flex-1 overflow-y-auto bg-warm-cream p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto bg-surface-muted p-6">{children}</main>
       </div>
     </div>
   );

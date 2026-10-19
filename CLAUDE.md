@@ -73,6 +73,15 @@ Custom JWT session auth (no NextAuth/Clerk), cookie name `aydin_admin_session`. 
 - `src/app/opengraph-image.tsx` generates the social share image at request time via `next/og`'s `ImageResponse` (no static asset to maintain). `icon.png`/`apple-icon.png` are static files following Next's app-icon convention.
 - `src/components/public/empty-state.tsx` is the single shared "nothing here yet" UI (used on the home page's per-category cards and the category page's no-products case) — reuse it rather than inlining another empty-state div.
 
+### Home page: scroll-driven cinematic intro
+
+- `src/app/(home)/` is its own route group (own layout, no site header/footer, Bebas Neue loaded only here). `(public)` keeps `gunun-menusu` and `iletisim`.
+- `src/components/home/cinematic-home.tsx` (client) renders the scene sections + passes the server-rendered `HomeMenu`/`HomeContact` through as children. `src/lib/cinematic/engine.ts` (GSAP ScrollTrigger + Lenis + one fixed canvas) is **dynamically imported after `window.load`** so GSAP/Lenis never reach `/menu` or product pages.
+- Frames live in `public/frames/{desktop,mobile}/sahne-N/0001.webp…` plus `public/frames/poster/sahne-N.webp` and `poster/menu.webp`. `src/lib/cinematic/scenes.json` is the single source for which video feeds which scene and how many frames each gets (read by both the engine and `scripts/extract-frames.sh`; regenerate frames after editing it). Frames are up to 1920px (desktop, q80) / 1080px (mobile, q75), never wider than the source video; the engine draws one real frame at a time (no blending, which ghosted fast motion). The mp4s in `kaynak-videolar/` are gitignored and never served. Budget per scene: desktop <=8 MB, mobile <=3.5 MB.
+- Colour lives only in `src/app/globals.css` (`--color-aydin-red` #e10600, `-hover` #b80500, `-light` #ff2a1f for small red text on black, white, neutral greys, WhatsApp green). No cream, burgundy or orange anywhere; `warm-white`/`warm-cream` are kept as names but are both pure white. The home CSS reads those tokens (`--cine-*` only aliases them). Body font is Plus Jakarta Sans (`--font-body`), headings keep Roboto Slab (menu) / Bebas Neue (home).
+- `src/lib/cinematic/effects.ts` is a separate lazy chunk started after the engine (SplitText headings, stagger-revealed menu cards, magnetic buttons on fine pointers, red progress bar). It never loads in static mode. The scene marquee is pure CSS.
+- Static-poster mode (Save-Data, 2g/3g, `prefers-reduced-motion`) is chosen before paint by an inline script in `(home)/layout.tsx` that sets `data-mode="static"` on `#cine-root`; CSS in `(home)/cinematic.css` does the rest and the engine never loads.
+
 ### Known build quirk (resolved)
 
 Turbopack previously warned that it "ignored package-lock.json" because a lockfile exists in a parent directory outside this git repo (`C:\Users\vtn`). `next.config.ts` now pins `turbopack.root` to the project directory explicitly, so this shouldn't resurface — if it does, that's the fix (not deleting the outer lockfile).

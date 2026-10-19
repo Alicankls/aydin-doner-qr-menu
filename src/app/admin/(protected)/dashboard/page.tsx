@@ -44,7 +44,7 @@ const StatCard = ({
   href?: string;
 }) => {
   const inner = (
-    <div className="flex items-center gap-4 rounded-xl border border-border-soft bg-warm-cream px-5 py-4 shadow-sm">
+    <div className="flex items-center gap-4 rounded-xl border border-border-soft bg-surface-muted px-5 py-4 shadow-sm">
       <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-aydin-red/10 text-aydin-red">
         {icon}
       </div>

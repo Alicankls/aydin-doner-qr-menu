@@ -35,7 +35,7 @@ export default async function ContactPage() {
         {settings.phone && (
           <a
             href={buildTelLink(settings.phone) ?? "#"}
-            className="flex items-center gap-4 rounded-2xl border border-border-soft bg-warm-white p-5 shadow-sm transition hover:border-aydin-red"
+            className="flex items-center gap-4 rounded-2xl border border-border-soft bg-white p-5 shadow-card transition hover:border-aydin-red"
           >
             <span className="flex h-11 w-11 items-center justify-center rounded-full bg-aydin-red/10 text-aydin-red">
               <Phone className="h-5 w-5" />
@@ -52,9 +52,9 @@ export default async function ContactPage() {
             href={buildWhatsappLink(settings.whatsapp, "Merhaba!") ?? "#"}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-4 rounded-2xl border border-border-soft bg-warm-white p-5 shadow-sm transition hover:border-aydin-red"
+            className="flex items-center gap-4 rounded-2xl border border-border-soft bg-white p-5 shadow-card transition hover:border-aydin-red"
           >
-            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366]/10 text-[#1da851]">
+            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-whatsapp/10 text-whatsapp-hover">
               <MessageCircle className="h-5 w-5" />
             </span>
             <span>
@@ -69,7 +69,7 @@ export default async function ContactPage() {
             href={GOOGLE_MAPS_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-4 rounded-2xl border border-border-soft bg-warm-white p-5 shadow-sm transition hover:border-aydin-red"
+            className="flex items-center gap-4 rounded-2xl border border-border-soft bg-white p-5 shadow-card transition hover:border-aydin-red"
           >
             <span className="flex h-11 w-11 items-center justify-center rounded-full bg-aydin-red/10 text-aydin-red">
               <MapPin className="h-5 w-5" />
@@ -81,7 +81,7 @@ export default async function ContactPage() {
           </a>
         )}
 
-        <div className="flex items-start gap-4 rounded-2xl border border-border-soft bg-warm-white p-5 shadow-sm">
+        <div className="flex items-start gap-4 rounded-2xl border border-border-soft bg-white p-5 shadow-card">
           <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-aydin-red/10 text-aydin-red">
             <Clock className="h-5 w-5" />
           </span>
@@ -97,7 +97,7 @@ export default async function ContactPage() {
                   <span
                     className={
                       row.closed
-                        ? "font-bold uppercase tracking-wide text-aydin-red-dark"
+                        ? "font-bold uppercase tracking-wide text-aydin-red"
                         : "font-medium text-charcoal"
                     }
                   >

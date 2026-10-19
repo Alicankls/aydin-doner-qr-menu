@@ -79,7 +79,7 @@ export function ImageUploader({
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={isPending}
-          className="flex h-32 w-full flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border-soft text-secondary-text transition hover:border-aydin-red/50 hover:text-aydin-red-dark"
+          className="flex h-32 w-full flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border-soft text-secondary-text transition hover:border-aydin-red/50 hover:text-aydin-red-hover"
         >
           <UploadCloud className={`h-6 w-6 ${isPending ? "animate-pulse" : ""}`} />
           <span className="text-sm">

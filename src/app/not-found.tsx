@@ -12,7 +12,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="mt-2 inline-flex h-11 items-center rounded-full bg-aydin-red px-6 font-semibold text-white transition hover:bg-aydin-red-dark"
+        className="mt-2 inline-flex h-11 items-center rounded-full bg-aydin-red px-6 font-semibold text-white transition hover:bg-aydin-red-hover"
       >
         Menüye Dön
       </Link>

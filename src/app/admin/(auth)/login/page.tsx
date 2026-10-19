@@ -81,7 +81,7 @@ function LoginForm() {
           <Button
             type="submit"
             disabled={isPending}
-            className="w-full bg-charcoal text-warm-cream hover:bg-warm-cream hover:text-charcoal"
+            className="w-full bg-charcoal text-warm-cream hover:bg-surface-muted hover:text-charcoal"
             variant="secondary"
           >
             {isPending ? "Giriş yapılıyor..." : "Giriş Yap"}

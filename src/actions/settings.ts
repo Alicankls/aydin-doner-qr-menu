@@ -50,7 +50,7 @@ export async function updateSiteSettingsAction(
         instagram: data.instagram ?? null,
         facebook: data.facebook ?? null,
         tiktok: data.tiktok ?? null,
-        themeColor: data.themeColor || "#B82F3D",
+        themeColor: data.themeColor || "#E10600",
         aboutText: data.aboutText ?? null,
       },
     });
